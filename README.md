@@ -1,75 +1,59 @@
-# Marginal distributions and correlation coefficient  
+# Single server with infinite capacity (M/M/1):(oo/FIFO)
+## Aim :
+To find (a) average number of materials in the system (b) average number of materials in the conveyor (c) waiting time of each material in the system (d) waiting time of each material in the conveyor, if the arrival  of materials follow poisson process with the mean interval time 12 seconds, serivice time of lathe machine follows exponential distribution with mean serice time 1 second and average service time of robot is 7seconds.
 
-# Aim : 
+## Software required :
+Visual components and Python
 
-To find marginal distributions and correation coefficient of joint probability mass funcition of two dimensional random variables
+## Theory:
+Queuing are the most frequently encountered problems in everyday life. For example, queue at a cafeteria, library, bank, etc. Common to all of these cases are the arrivals of objects requiring service and the attendant delays when the service mechanism is busy. Waiting lines cannot be eliminated completely, but suitable techniques can be used to reduce the waiting time of an object in the system. A long waiting line may result in loss of customers to an organization. Waiting time can be reduced by providing additional service facilities, but it may result in an increase in the idle time of the service mechanism.
 
-![image](https://user-images.githubusercontent.com/104613195/168222062-bb7dec1f-f115-4669-8b4c-58283af8ccf3.png)
+![image](1.png)
 
-# Software required :  
+This is a queuing model in which the arrival is Marcovian and departure distribution is also Marcovian,number of server is one and size of the queue is also Marcovian,no.of server is one and size of the queue is infinite and service discipline is 1st come 1st serve(FCFS) and the calling source is also finite.
 
-Python
+## Procedure :
 
-# Theory:
-
-A marginal distribution is a distribution of values for one variable that ignores a more extensive set of related variables in a dataset.
-The marginal mass function for X is found by summing over the appropriate column and the marginal mass function
-for Y can be found be summing over the appropriate row.
-
-Correlation coefficients are indicators of the strength of the linear relationship between two different variables. The coefficient of correlation is measure of degree of realtionship betwen two variavbles. A linear correlation coefficient that is greater than zero indicates a positive relationship. A value that is less than zero signifies a negative relationship. Finally, a value of zero indicates no relationship between the two variables x and y.  
+![imAGE](2.png)
 
 
 
-# Procedure :
-![image](https://user-images.githubusercontent.com/104613195/168220332-09383cb4-a7ac-4526-b547-fc522ca53227.png)
+## Experiment:
+![o](3.png)
+![o](4.png)
 
-
-
-# Program
-```
-/*
-Developed by : ezhil mathi.r
-Registration Number: 212221230026
-*/
-```
-
-```python
-import numpy as np 
-import math
-x=[0,1,2,3,4,5]
-y=[0,1,2,3]
-p=[[0,0.01,0.03,0.05,0.07,0.09],[0.01,0.02,0.04,0.05,0.06,0.08],[0.01,0.03,0.05,0.05,0.05,0.06],[0.01,0.02,0.04,0.06,0.06,0.05]]
-px=np.sum(p,axis=0)
-py=np.sum(p,axis=1)
-Ex=np.inner(x,px)
-Ey=np.inner(y,py)
-px
-py
-Ex
-Ey
-Ex2=np.inner(np.square(x),px)
-Ex2
-Ey2=np.inner(np.square(y),py)
-Ey2
-vx=Ex2-Ex**2
-vx
-vy=Ey2-Ey**2
-vy
-sx=math.sqrt(vx)
-sy=math.sqrt(vy)
-Exy=0
-for i in range(4):
-    for j in range(6):
-        Exy=Exy+x[j]*y[i]*p[i][j]
-Exy
-Cov=Exy-Ex*Ey
-Cov
-r=Cov/(sx*sy)
-r
-print("The coefficient-correlation %0.4f"%r)
+ 
+## Program
+```py
+arr_time=float(input("Enter the mean inter arrival time of objects from Feeder (in secs): "))
+ser_time=float(input("Enter the mean  inter service time of Lathe Machine (in secs) :  "))
+Robot_time=float(input("Enter the Additional time taken for the Robot (in secs) :  "))
+lam=1/arr_time
+mu=1/(ser_time+Robot_time)
+print("--------------------------------------------------------------")
+print("Single Server with Infinite Capacity - (M/M/1):(oo/FIFO)")
+print("--------------------------------------------------------------")
+print("The mean arrival rate per second : %0.2f "%lam)
+print("The mean service rate per second : %0.2f "%mu)
+if (lam <  mu):
+    Ls=lam/(mu-lam)
+    Lq=Ls-lam/mu
+    Ws=Ls/lam
+    Wq=Lq/lam
+    print("Average number of objects in the system : %0.2f "%Ls)
+    print("Average number of objects in the conveyor :  %0.2f "%Lq)
+    print("Average waiting time of an object in the system : %0.2f secs"%Ws)
+    print("Average waiting time of an object in the conveyor : %0.2f secs"%Wq)
+    print("Probability that the system is busy : %0.2f "%(lam/mu) )
+    print("Probability that the system is empty : %0.2f "%(1-lam/mu) )
+else:
+    print("Warning! Objects Over flow will happen in the conveyor")
+print("---------------------------------------------------------------")
 ```
 
-# Results and Output : 
-![image](https://user-images.githubusercontent.com/75235813/168963046-597bf8fc-3fc5-4151-bcd5-37581bfdc44e.png)
+## Output :
+![o](ex4.png)
 
-Thus, the program to find marginal distributions and correation coefficient of joint probability mass funcition of two dimensional random variables is implemented.
+## Result :
+The average number of material in the sysytem and in the conveyor and waiting time are successfully found.
+
